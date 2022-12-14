@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2021 CERN.
-# Copyright (C) 2021 Caltech.
+# Copyright (C) 2022 Caltech.
 # Copyright (C) 2021 Northwestern University.
 #
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
@@ -33,10 +33,7 @@ def full_modified_record(full_record):
         {
             "identifier": "unknown-1234-b",
             "scheme": "unknown-scheme",
-            "relation_type": {
-                "id": "iscitedby",
-                "title": {"en": "Is cited by"},
-            },
+            "relation_type": {"id": "iscitedby", "title": {"en": "Is cited by"}},
         }
     ]
 
@@ -87,16 +84,15 @@ def full_geolocation_polygon_record(full_record):
             }
         }
     ]
+def full_modified_date_record(full_record):
+    full_record["updated"] = "2022-12-12T22:50:10.573125+00:00"
+
     return full_record
 
 
 def test_datacite43_serializer(running_app, full_record):
     """Test serializer to DataCite 4.3 JSON"""
-    full_record["metadata"]["rights"].append(
-        {
-            "title": {"en": "No rightsUri license"},
-        }
-    )
+    full_record["metadata"]["rights"].append({"title": {"en": "No rightsUri license"}})
     # for HTML stripping test purposes
     expected_data = {
         "types": {"resourceTypeGeneral": "Image", "resourceType": "Photo"},
@@ -341,7 +337,7 @@ def test_datacite43_identifiers(running_app, minimal_record):
             "identifier": "10.5281/inveniordm.1234",
             "provider": "datacite",
             "client": "inveniordm",
-        },
+        }
     }
 
     serialized_record = serializer.dump_obj(minimal_record)
@@ -359,10 +355,7 @@ def test_datacite43_serializer_with_unknown_id_schemes(
     # if the behaviour of the datacite serializer is changed, the asserts
     # below should probably be adjusted accordingly
 
-    expected_pid_id = {
-        "identifier": "unknown-1234",
-        "identifierType": "unknown-scheme",
-    }
+    expected_pid_id = {"identifier": "unknown-1234", "identifierType": "unknown-scheme"}
     expected_pid_id_2 = {
         "identifier": "unknown-1234-a",
         "identifierType": "unknown-scheme",
@@ -449,3 +442,17 @@ def test_datacite43_serializer_with_polygon(
     serialized_record_polygon = serializer.dump_obj(full_geolocation_polygon_record)
 
     assert expected_polygon in serialized_record_polygon["geoLocations"]
+def test_datacite43_serializer_updated_date(running_app, full_modified_date_record):
+    """Test if the DataCite 4.3 JSON serializer adds system updated date."""
+
+    expected_dates = [
+        {"date": "2018/2020-09", "dateType": "Issued"},
+        {"date": "1939/1945", "dateType": "Other", "dateInformation": "A date"},
+        {"date": "2022-12-12", "dateType": "Updated"},
+    ]
+
+    serializer = DataCite43JSONSerializer()
+    serialized_record = serializer.dump_one(full_modified_date_record)
+
+    assert expected_dates == serialized_record["dates"]
+    assert len(serialized_record["dates"]) == 3
