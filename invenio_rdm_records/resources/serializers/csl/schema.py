@@ -125,7 +125,7 @@ class CSLJSONSchema(BaseSerializerSchema):
         """Get ISBN."""
         identifiers = obj["metadata"].get("identifiers", [])
         for identifier in identifiers:
-            if identifier["scheme"] == "ISBN":
+            if identifier["scheme"] == "isbn":
                 return identifier["identifier"]
 
         return missing
@@ -134,7 +134,7 @@ class CSLJSONSchema(BaseSerializerSchema):
         """Get ISSN."""
         identifiers = obj["metadata"].get("identifiers", [])
         for identifier in identifiers:
-            if identifier["scheme"] == "ISSN":
+            if identifier["scheme"] == "issn":
                 return identifier["identifier"]
 
         return missing
