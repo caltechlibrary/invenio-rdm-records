@@ -57,7 +57,7 @@ class CSLJSONSchema(Schema):
     language = fields.Method("get_language")
     version = SanitizedUnicode(attribute="metadata.version")
     note = fields.Method("get_note")
-    doi = fields.Str(attribute="pids.doi.identifier", data_key="DOI")
+    doi = fields.Method("get_doi", data_key="DOI")
     isbn = fields.Method("get_isbn", data_key="ISBN")
     issn = fields.Method("get_issn", data_key="ISSN")
     publisher = SanitizedUnicode(attribute="metadata.publisher")
@@ -76,6 +76,20 @@ class CSLJSONSchema(Schema):
         resource_type_record = self._read_resource_type(resource_type["id"])
         props = resource_type_record["props"]
         return props.get("csl", "article")  # article is CSL "Other"
+
+    def get_doi(self, obj):
+        """Get doi."""
+        doi = obj["pids"].get("doi")
+
+        if doi:
+            return doi["identifier"]
+
+        identifiers = obj["metadata"].get("identifiers", [])
+        for identifier in identifiers:
+            if identifier["scheme"] == "doi":
+                return identifier["identifier"]
+
+        return missing
 
     def get_issued(self, obj):
         """Get issued dates."""
