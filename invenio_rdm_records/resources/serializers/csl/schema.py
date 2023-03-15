@@ -57,7 +57,7 @@ class CSLJSONSchema(Schema):
     language = fields.Method("get_language")
     version = SanitizedUnicode(attribute="metadata.version")
     note = fields.Method("get_note")
-    doi = fields.Str(attribute="get_doi", data_key="DOI")
+    doi = fields.Method("get_doi", data_key="DOI")
     isbn = fields.Method("get_isbn", data_key="ISBN")
     issn = fields.Method("get_issn", data_key="ISSN")
     publisher = SanitizedUnicode(attribute="metadata.publisher")
@@ -79,13 +79,16 @@ class CSLJSONSchema(Schema):
 
     def get_doi(self, obj):
         """Get doi."""
-        doi = obj["pids"].get(
-            "doi", "identifier"
-        )
+        doi = obj["pids"].get("doi")
 
-        if not doi:
-            doi = obj["metadata"].get("identifiers",{"scheme": "doi"})
-        
+        if doi:
+            doi = doi['identifier']
+        else:
+            identifiers = obj["metadata"].get("identifiers")
+            for identifier in identifiers:
+                if identifier["scheme"] == "doi":
+                    doi = identifier["identifier"]
+
         return doi
 
     def get_issued(self, obj):
@@ -121,7 +124,7 @@ class CSLJSONSchema(Schema):
         """Get ISBN."""
         identifiers = obj["metadata"].get("identifiers", [])
         for identifier in identifiers:
-            if identifier["scheme"] == "ISBN":
+            if identifier["scheme"] == "isbn":
                 return identifier["identifier"]
 
         return missing
@@ -130,7 +133,7 @@ class CSLJSONSchema(Schema):
         """Get ISSN."""
         identifiers = obj["metadata"].get("identifiers", [])
         for identifier in identifiers:
-            if identifier["scheme"] == "ISSN":
+            if identifier["scheme"] == "issn":
                 return identifier["identifier"]
 
         return missing
