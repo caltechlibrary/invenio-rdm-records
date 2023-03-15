@@ -59,7 +59,7 @@ class CSLJSONSchema(BaseSerializerSchema, CommonFieldsMixin):
     language = fields.Method("get_language")
     version = SanitizedUnicode(attribute="metadata.version")
     note = fields.Method("get_note")
-    doi = fields.Method("get_doi")
+    doi = fields.Method("get_doi", data_key="DOI")
     isbn = fields.Method("get_isbn", data_key="ISBN")
     issn = fields.Method("get_issn", data_key="ISSN")
     publisher = SanitizedUnicode(attribute="metadata.publisher")
