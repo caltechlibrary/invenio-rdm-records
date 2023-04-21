@@ -11,6 +11,16 @@
  Invenio-RDM-Records
 ====================
 
+
+This is a fork managed by Caltech Library for customizations currently used in
+CaltechAUTHORS. It is comprised of code contributed in other pull requests, and
+isn't intended to be used anywhere else. It currently contains code from
+branches:
+
+- journal-pages https://github.com/inveniosoftware/invenio-rdm-records/pull/1261
+- csl-updates https://github.com/inveniosoftware/invenio-rdm-records/pull/1252
+
+
 .. image:: https://github.com/inveniosoftware/invenio-rdm-records/workflows/CI/badge.svg
         :target: https://github.com/inveniosoftware/invenio-rdm-records/actions?query=workflow%3ACI+branch%3Amaster
 
