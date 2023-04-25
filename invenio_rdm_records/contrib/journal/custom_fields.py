@@ -95,7 +95,7 @@ JOURNAL_CUSTOM_FIELDS_UI = {
                     "description": "",
                 },
                 "pages": {
-                    "label": _("Page Range or Article Number"),
+                    "label": _("Page range or article number"),
                     "placeholder": "",
                     "description": "",
                 },
