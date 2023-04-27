@@ -7,6 +7,8 @@
 
 """CSL based Schema for Invenio RDM Records."""
 
+import re
+
 from edtf import parse_edtf
 from edtf.parser.edtf_exceptions import EDTFParseException
 from edtf.parser.parser_classes import Date, Interval
@@ -62,6 +64,17 @@ class CSLJSONSchema(BaseSerializerSchema):
     isbn = fields.Method("get_isbn", data_key="ISBN")
     issn = fields.Method("get_issn", data_key="ISSN")
     publisher = SanitizedUnicode(attribute="metadata.publisher")
+
+    container_title = fields.Method("get_container_title")
+    page = fields.Method("get_pages")
+    volume = fields.Str(attribute="custom_fields.journal:journal.volume")
+    issue = fields.Str(attribute="custom_fields.journal:journal.issue")
+    publisher_place = fields.Str(attribute="custom_fields.imprint:imprint.place")
+
+    event = fields.Method("get_event")
+    event_place = fields.Str(
+        attribute="custom_fields.meeting:meeting.place", dump_to="event-place"
+    )
 
     def _read_resource_type(self, id_):
         """Retrieve resource type record using service."""
@@ -148,3 +161,35 @@ class CSLJSONSchema(BaseSerializerSchema):
             return note
 
         return missing
+
+    def get_event(self, obj):
+        """Get event/meeting title and acronym."""
+        m = obj["metadata"]
+        meeting = m.get("meeting", {})
+        if meeting:
+            title = meeting.get("title")
+            acronym = meeting.get("acronym")
+            if title and acronym:
+                return "{} ({})".format(title, acronym)
+            elif title or acronym:
+                return title or acronym
+        return missing
+
+    def get_journal_or_imprint(self, obj, key):
+        """Get journal or imprint metadata."""
+        m = obj["custom_fields"]
+        journal = m.get("journal:journal", {}).get(key)
+        imprint = m.get("imprint:imprint", {}).get(key)
+
+        return journal or imprint or missing
+
+    def get_container_title(self, obj):
+        """Get container title."""
+        return self.get_journal_or_imprint(obj, "title")
+
+    def get_pages(self, obj):
+        """Get pages."""
+        # Remove multiple dashes between page numbers (eg. 12--15)
+        pages = self.get_journal_or_imprint(obj, "pages")
+        pages = re.sub("-+", "-", pages) if pages else pages
+        return pages
