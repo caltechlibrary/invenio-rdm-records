@@ -51,7 +51,7 @@ class MeetingCSLDumper(DumperMixin):
 
         title = meeting_data.get("title")
         acronym = meeting_data.get("acronym")
-        place = imprint_data.get("place")
+        place = meeting_data.get("place")
 
         if title and acronym:
             data["event"] = f"{title} ({acronym})"
