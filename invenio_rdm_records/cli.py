@@ -280,6 +280,25 @@ def create_fixtures():
     click.secho("Created required fixtures!", fg="green")
 
 
+@rdm_records.command("add_to_fixture")
+@click.argument("fixture")
+@with_appcontext
+def add_to_fixture(fixture):
+    """Add or update new entries to existing fixture.
+
+    Takes a argument of a vocabulary
+    name (e.g. contributorsroles).
+
+    Example:
+    pipenv run invenio rdm-records add_to_fixture contributorsroles
+    """
+    click.secho("Adding or updating entries to fixtures...", fg="green")
+
+    FixturesEngine(system_identity).add_to(fixture)
+
+    click.secho("Sent all entry additions and updates to celery!", fg="green")
+
+
 @rdm_records.command("rebuild-index")
 @with_appcontext
 def rebuild_index():
