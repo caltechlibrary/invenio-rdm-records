@@ -40,8 +40,10 @@ def get_authenticated_identity(user_id):
 def create_vocabulary_record(service_str, data):
     """Create a vocabulary record."""
     service = current_service_registry.get(service_str)
-    service.create(system_identity, data)
-
+    try:
+        service.create(system_identity, data)
+    except:
+        current_app.logger.info(f"skipping creation of {data}, already existing")
 
 @shared_task
 def create_demo_record(user_id, data, publish=True):

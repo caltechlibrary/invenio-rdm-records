@@ -279,6 +279,17 @@ def create_fixtures():
 
     click.secho("Created required fixtures!", fg="green")
 
+@rdm_records.command("add_to_fixture")
+@click.argument("fixture")
+@with_appcontext
+def add_to_fixture(fixture):
+    """Add new entries to existing fixture. Takes a argument of a vocabulary name (e.g. contributorsroles)"""
+    click.secho("Adding entries to fixtures...", fg="green")
+
+    FixturesEngine(system_identity).add_to(fixture)
+
+    click.secho("Added entries to fixture!", fg="green")
+
 
 @rdm_records.command("rebuild-index")
 @with_appcontext
