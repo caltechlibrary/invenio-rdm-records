@@ -10,6 +10,7 @@
 
 from pathlib import Path
 
+from flask import current_app
 from .users import UsersFixture
 from .vocabularies import PrioritizedVocabulariesFixtures, VocabulariesFixture
 
