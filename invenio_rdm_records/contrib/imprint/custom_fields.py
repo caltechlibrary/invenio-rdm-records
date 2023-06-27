@@ -70,7 +70,7 @@ IMPRINT_CUSTOM_FIELDS_UI = {
     "fields": [
         {
             "field": "imprint:imprint",
-            "ui_widget": "Imprint (Book, Chapter, or Report)",
+            "ui_widget": "Imprint",
             "template": "imprint.html",
             "props": {
                 "label": _("Imprint (Book, Chapter, or Report)"),
