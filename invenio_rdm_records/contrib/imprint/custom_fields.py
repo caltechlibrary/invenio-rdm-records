@@ -55,7 +55,7 @@ class ImprintCF(BaseCF):
                 "isbn": {"type": "keyword"},
                 "pages": {"type": "keyword"},
                 "place": {"type": "keyword"},
-                "edition": {"type": "edition"},
+                "edition": {"type": "keyword"},
             },
         }
 
