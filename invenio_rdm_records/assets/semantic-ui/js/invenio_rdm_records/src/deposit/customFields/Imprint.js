@@ -21,7 +21,6 @@ export class Imprint extends Component {
       isbn,
       pages,
       edition,
-      volume,
       label,
       icon,
     } = this.props;
