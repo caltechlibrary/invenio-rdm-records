@@ -11,6 +11,7 @@ Implements the following fields:
 - imprint.pages
 - imprint.place
 - imprint.title
+- imprint.edition
 """
 
 from idutils import is_isbn
@@ -37,6 +38,7 @@ class ImprintCF(BaseCF):
                 ),
                 "pages": SanitizedUnicode(),
                 "place": SanitizedUnicode(),
+                "edition": SanitizedUnicode(),
             }
         )
 
@@ -53,6 +55,7 @@ class ImprintCF(BaseCF):
                 "isbn": {"type": "keyword"},
                 "pages": {"type": "keyword"},
                 "place": {"type": "keyword"},
+                "edition": {"type": "edition"},
             },
         }
 
@@ -95,6 +98,11 @@ IMPRINT_CUSTOM_FIELDS_UI = {
                     "label": _("Pagination"),
                     "placeholder": _("e.g. 15-23 or 158"),
                     "description": "",
+                },
+                "edition": {
+                    "label": _("Edition"),
+                    "placeholder": "3",
+                    "description": "The edition of the book",
                 },
                 "icon": "book",
             },
