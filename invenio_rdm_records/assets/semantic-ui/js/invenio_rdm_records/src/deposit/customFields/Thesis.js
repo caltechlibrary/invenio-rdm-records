@@ -36,30 +36,30 @@ export class Thesis extends Component {
               fieldPath={fieldPath}
               label={university.label}
               placeholder={university.placeholder}
+           />
+           {university.description && (
+             <label className="helptext mb-0">{university.description}</label>
+           )}
+          </Grid.Column>
+          <Grid.Column width="6">
+            <Input
+              fieldPath={fieldPath}
+              label={department.label}
+              placeholder={department.placeholder}
             />
-            {university.description && (
-              <label className="helptext mb-0">{university.description}</label>
+            {department.description && (
+              <label className="helptext mb-0">{department.description}</label>
             )}
           </Grid.Column>
           <Grid.Column width="6">
             <Input
-               fieldPath={fieldPath}
-               label={department.label}
-               placeholder={department.placeholder}
-             />
-             {department.description && (
-               <label className="helptext mb-0">{department.description}</label>
-             )}
-          </Grid.Column>
-          <Grid.Column width="6">
-            <Input
-               fieldPath={fieldPath}
-               label={type.label}
-               placeholder={type.placeholder}
-             />
-             {type.description && (
-               <label className="helptext mb-0">{type.description}</label>
-             )}
+              fieldPath={fieldPath}
+              label={type.label}
+              placeholder={type.placeholder}
+            />
+            {type.description && (
+              <label className="helptext mb-0">{type.description}</label>
+            )}
           </Grid.Column>
         </Grid>
       </>
