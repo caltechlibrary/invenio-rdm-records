@@ -33,7 +33,7 @@ export class Thesis extends Component {
         <Grid padded>
           <Grid.Column width="6">
             <Input
-              fieldPath={fieldPath}
+              fieldPath={`${fieldPath}.university`}
               label={university.label}
               placeholder={university.placeholder}
             />
@@ -43,7 +43,7 @@ export class Thesis extends Component {
           </Grid.Column>
           <Grid.Column width="6">
             <Input
-              fieldPath={fieldPath}
+              fieldPath={`${fieldPath}.department`}
               label={department.label}
               placeholder={department.placeholder}
             />
@@ -53,7 +53,7 @@ export class Thesis extends Component {
           </Grid.Column>
           <Grid.Column width="4">
             <Input
-              fieldPath={fieldPath}
+              fieldPath={`${fieldPath}.type`}
               label={type.label}
               placeholder={type.placeholder}
             />
