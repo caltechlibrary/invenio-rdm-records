@@ -83,7 +83,7 @@ export class Imprint extends Component {
               <label className="helptext mb-0">{edition.description}</label>
             )}
           </Grid.Column>
-      </Grid>
+        </Grid>
       </>
     );
   }
