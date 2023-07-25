@@ -31,7 +31,7 @@ export class Thesis extends Component {
           </>
         )}
         <Grid padded>
-          <Grid.Column width="16">
+          <Grid.Column width="6">
             <Input
               fieldPath={fieldPath}
               label={university.label}
@@ -40,6 +40,8 @@ export class Thesis extends Component {
             {university.description && (
               <label className="helptext mb-0">{university.description}</label>
             )}
+           </Grid.Column>
+           <Grid.Column width="6">
            <Input
               fieldPath={fieldPath}
               label={department.label}
@@ -48,6 +50,8 @@ export class Thesis extends Component {
             {department.description && (
               <label className="helptext mb-0">{department.description}</label>
             )}
+           </Grid.Column>
+           <Grid.Column width="6">
            <Input
               fieldPath={fieldPath}
               label={type.label}
