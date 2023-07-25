@@ -36,10 +36,10 @@ export class Thesis extends Component {
               fieldPath={fieldPath}
               label={university.label}
               placeholder={university.placeholder}
-           />
-           {university.description && (
-             <label className="helptext mb-0">{university.description}</label>
-           )}
+            />
+            {university.description && (
+              <label className="helptext mb-0">{university.description}</label>
+            )}
           </Grid.Column>
           <Grid.Column width="6">
             <Input
