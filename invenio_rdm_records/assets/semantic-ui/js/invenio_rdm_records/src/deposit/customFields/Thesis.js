@@ -67,7 +67,7 @@ Thesis.propTypes = {
   fieldPath: PropTypes.string.isRequired,
   university: PropTypes.object.isRequired,
   department: PropTypes.object.isRequired,
-  type: PropTypes.object.isRequired;
+  type: PropTypes.object.isRequired,
   icon: PropTypes.string,
   label: PropTypes.string,
 };
