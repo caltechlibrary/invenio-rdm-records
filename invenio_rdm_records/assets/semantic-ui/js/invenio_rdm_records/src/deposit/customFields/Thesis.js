@@ -51,7 +51,7 @@ export class Thesis extends Component {
               <label className="helptext mb-0">{department.description}</label>
             )}
           </Grid.Column>
-          <Grid.Column width="6">
+          <Grid.Column width="4">
             <Input
               fieldPath={fieldPath}
               label={type.label}
