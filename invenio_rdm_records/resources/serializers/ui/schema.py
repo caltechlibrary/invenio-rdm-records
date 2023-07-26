@@ -191,7 +191,9 @@ def compute_publishing_information(obj, dummyctx):
         imprint_place = imprint.get("place")
         imprint_isbn = imprint.get("isbn")
         imprint_pages = imprint.get("pages")
-        title_page = f"{imprint_title}" if imprint_title else None
+        edition = imprint.get("edition")
+        ed_form = f" {edition} ed." if edition else ""
+        title_page = f"{imprint_title}{ed_form}" if imprint_title else None
         if imprint_pages:
             if title_page:
                 title_page += f", {imprint_pages}."
@@ -202,6 +204,14 @@ def compute_publishing_information(obj, dummyctx):
         place = f"{imprint_place}." if imprint_place else None
         isbn = f"ISBN: {imprint_isbn}." if imprint_isbn else None
         formatted = " ".join(filter(None, [title_page, place, isbn]))
+
+    def _format_thesis(thesis):
+        """Formats a thesis object into a string based on its attributes."""
+        university = thesis.get("university", "")
+        department = thesis.get("department", "")
+        ttype = thesis.get("type", "")
+        fields = [university, department, ttype]
+        formatted= "v ".join(filter(None, fields))
         return formatted
 
     attr = "custom_fields"
