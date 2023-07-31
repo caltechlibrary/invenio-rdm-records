@@ -199,7 +199,7 @@ def compute_publishing_information(obj, dummyctx):
                 title_page += f", {imprint_pages}."
             else:
                 title_page = f"{imprint_pages}."
-        else:
+        elif title_page:
             title_page += "."
         place = f"{imprint_place}." if imprint_place else None
         isbn = f"ISBN: {imprint_isbn}." if imprint_isbn else None
