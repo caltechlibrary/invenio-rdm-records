@@ -58,6 +58,16 @@ def test_publish_public_record_with_default_doi(
     assert "doi" in record._record.pids
 
 
+def test_publish_public_record_with_optional_doi(
+    app_with_optional_doi, search_clear, minimal_record
+):
+    superuser_identity = app_with_optional_doi.superuser_identity
+    service = current_rdm_records.records_service
+    draft = service.create(superuser_identity, minimal_record)
+    record = service.publish(id_=draft.id, identity=superuser_identity)
+    assert "doi" not in record._record.pids
+
+
 def test_publish_restricted_record_without_default_doi(
     running_app, search_clear, minimal_restricted_record
 ):

@@ -40,3 +40,10 @@ def authenticated_identity():
     identity.provides.add(UserNeed(1))
     identity.provides.add(authenticated_user)
     return identity
+
+
+@pytest.fixture(scope="function")
+def app_with_optional_doi(running_app):
+    """Sets DOI as optional."""
+    running_app.app.config["RDM_PERSISTENT_IDENTIFIERS"]["doi"]["required"] = False
+    return running_app
