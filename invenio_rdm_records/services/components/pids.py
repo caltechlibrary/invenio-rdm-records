@@ -96,15 +96,14 @@ class PIDsComponent(ServiceComponent):
 
         # Determine schemes which are required, but not yet created.
         missing_required_schemes = required_schemes - record_schemes - draft_schemes
+
+        # We don't create a DOI for restricted records
+        if draft["access"]["record"] == "restricted":
+            missing_required_schemes.discard("doi")
+
         # Create all PIDs specified on draft and all missing required PIDs
         pids = self.service.pids.pid_manager.create_all(
-            draft,
-            pids=draft_pids,
-            schemes=(
-                missing_required_schemes
-                if draft["access"]["record"] != "restricted"
-                else None
-            ),
+            draft, pids=draft_pids, schemes=missing_required_schemes
         )
 
         # Reserve all created PIDs and store them on the record
