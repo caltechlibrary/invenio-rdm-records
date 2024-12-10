@@ -12,6 +12,85 @@
 Changes
 =======
 
+Version v16.4.0 (released 2024-12-10)
+
+- bibtex: add trailing comma in url field
+- community-records: allow scan search
+    * Adds `scan` and `scan_params` arguments to
+      `CommunityRecordsService.search(...)`, to allow for serving scan
+      results (but only via the service).
+- serializer: updated subjects and affiliations in dcat
+- schema: added identifiers to subjects
+- serializers: add datapackage serializer (#1742)
+
+Version v16.3.4 (released 2024-12-06)
+
+- github: return None for `NOASSERTION` license
+- datacite: fix funding serialization for optional award fields
+    * Makes sure that we handle missing values for optional award fields
+      like "title" and "number".
+
+Version v16.3.3 (released 2024-12-04)
+
+- github: handle missing repo license
+
+Version v16.3.2 (released 2024-12-04)
+
+- github: lower license spdx id
+
+Version v16.3.1 (released 2024-12-02)
+
+- deposit-ui: make sure we handle null/undefined for SchemaField
+- deposit-ui: skip unecessary removal of empty values in serialization
+    * This initial removal of empty values can be dangerous, since the
+      `record` at this point is a UI object representation that could
+      potentially include circular references or very deeply nested objects.
+      Since `_removeEmptyValues` is recursive this can lead to stack
+      overflow errors.
+- deposit-ui: log errors on all deposit form actions
+    * This can help with debugging unexpected non-network related errors
+      that might occur in the logic before/after a REST API requests.
+
+Version v16.3.0 (released 2024-11-27)
+
+- github: added default license from Github API
+- deposit-ui: fix affiliations rendering during edits
+- github: added custom_fields in metadata extraction
+- github: added optional swhid field to the bibtex export
+- datacite: improve error logging formatting and grouping
+    * Avoids f-strings in logging calls so that entries are easier to be
+      grouped.
+    * Adds exception info to the logged errors.
+- config: added service schema from config
+- requests: manage sending notifications
+
+Version v16.2.0 (released 2024-11-19)
+
+- search: pass search parameters to collection records
+
+Version v16.1.1 (released 2024-11-19)
+
+- communities: fix set/unset of default record community
+    * Closes https://github.com/inveniosoftware/invenio-app-rdm/issues/2869
+    * Fixes the allowed values that can be passed to set/unset the default
+      community of a record.
+    * Part of the fix is to also accept an empty string ("") as a valid
+      value when setting the "default" field, which was a currently wrong
+      behavior in some UI logic.
+
+Version v16.1.0 (released 2024-11-18)
+
+- tokens: disable "sub" verification
+    * According to the JWT Specification (https://datatracker.ietf.org/doc/html/rfc7519#section-4.1.2)
+      `sub` has to be a string. PyJWT v2.10.0 started enforcing this validation,
+      which breaks our usage of storing an object in the `sub` field.
+    * Fixes jwt.decode options for specifying required fields.
+- jsonschemas: backport "internal_notes" to v6.0.0
+    * Backports the "internal_notes" field to the v6.0.0 JSONSchema, since
+      it is backwards compatible, and thus doesn't require any record
+      migration overhead.
+- UI: display all affiliations
+
 Version v16.0.1 (released 2024-11-11)
 
 - deposit-ui: fix creator affiliations selection display

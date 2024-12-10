@@ -18,7 +18,7 @@ from invenio_records_resources.services.errors import PermissionDeniedError
 from invenio_records_resources.services.uow import unit_of_work
 from invenio_search.engine import dsl
 
-from ...proxies import current_rdm_records, current_record_communities_service
+from ...proxies import current_record_communities_service
 from ...records.systemfields.deletion_status import RecordDeletionStatusEnum
 
 
@@ -45,6 +45,8 @@ class CommunityRecordsService(RecordService):
         params=None,
         search_preference=None,
         extra_filter=None,
+        scan=False,
+        scan_params=None,
         **kwargs,
     ):
         """Search for records published in the given community."""
@@ -76,7 +78,12 @@ class CommunityRecordsService(RecordService):
             permission_action="read",
             **kwargs,
         )
-        search_result = search.execute()
+
+        if scan:
+            scan_params = scan_params or {}
+            search_result = search.scan(**scan_params)
+        else:
+            search_result = search.execute()
 
         return self.result_list(
             self,

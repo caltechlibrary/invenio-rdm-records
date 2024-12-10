@@ -7,6 +7,7 @@
 # # it under the terms of the MIT License; see LICENSE file for more details.
 """Test user moderation actions."""
 
+import pytest
 from celery import Task
 from invenio_access.permissions import system_identity
 from invenio_db import db
@@ -23,13 +24,12 @@ class MockRequestModerationTask(Task):
 
     def apply_async(self, args=None, kwargs=None, **kwargs_):
         user_id = kwargs["user_id"]
-        with db.session.begin_nested():
-            try:
-                current_user_moderation_service.request_moderation(
-                    system_identity, user_id=user_id, uow=None
-                )
-            except Exception as ex:
-                pass
+        try:
+            current_user_moderation_service.request_moderation(
+                system_identity, user_id=user_id, uow=None
+            )
+        except Exception as ex:
+            pass
 
 
 def test_user_moderation_approve(
@@ -69,7 +69,7 @@ def test_user_moderation_approve(
     hits = pre_approval_records.to_dict()["hits"]["hits"]
     is_verified = all([hit["parent"]["is_verified"] for hit in hits])
 
-    assert is_verified == False
+    assert is_verified is False
 
     # Fetch moderation request that was created on publish
     res = current_requests_service.search(
@@ -95,7 +95,7 @@ def test_user_moderation_approve(
     assert post_approval_records.total == 2
     hits = post_approval_records.to_dict()["hits"]["hits"]
     is_verified = all([hit["parent"]["is_verified"] for hit in hits])
-    assert is_verified == True
+    assert is_verified is True
 
 
 def test_user_moderation_decline(
