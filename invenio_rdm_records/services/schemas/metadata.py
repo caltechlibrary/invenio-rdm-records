@@ -335,6 +335,9 @@ class LocationSchema(Schema):
     @validates_schema
     def validate_data(self, data, **kwargs):
         """Validate identifier based on type."""
+        # Turning off formatting for Python 3.9 black compatability
+        # Remove these comments once Python 3.9 support is no longer needed
+        # fmt: off
         if (
             not data.get("geometry")
             and not data.get("place")
@@ -342,13 +345,10 @@ class LocationSchema(Schema):
             and not data.get("description")
         ):
             raise ValidationError(
-                {
-                    "locations": _(
-                        "At least one of ['geometry', 'place', \
-                identifiers', 'description'] must be present."
-                    )
-                }
+                {"locations": _("At least one of ['geometry', 'place', \
+                identifiers', 'description'] must be present.")}
             )
+        # fmt: on
 
 
 class FeatureSchema(Schema):

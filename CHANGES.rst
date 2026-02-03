@@ -12,6 +12,28 @@
 Changes
 =======
 
+Version 23.2.2 (release 2026-01-27)
+
+- fix(deposit): prevent Enter key from removing array field rows
+
+
+Version 23.2.1 (release 2026-01-22)
+
+- fix(permissions): allow system user to manage files
+- fix(request_policies): allow system user to modify files
+- chore: black formatting python3.9 compatability
+- fix(files): fix for pending files with long names
+- fix(deposit): rename conflicting prop func
+
+
+Version v23.2.0 (released 2026-01-16)
+
+- fix(requests): inherit from BaseRequest to fix self_html links
+- fix(tests): update wikidata identifier
+- fix: The character 'U+fe0f' is invisible.
+- Add Arabic translations for resource types
+- fix(schema): take the list of allowed tags and attrs from the app config
+
 Version v23.1.1 (released 2026-01-08)
 
 - bibtex: schema: add publication-thesis for compatibility
