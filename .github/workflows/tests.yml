@@ -32,7 +32,7 @@ on:
 
 jobs:
   Python:
-    uses: inveniosoftware/workflows/.github/workflows/tests-python.yml@master
+    uses: inveniosoftware/workflows/.github/workflows/tests-python.yml@unpin-py14
 
   JS:
     uses: inveniosoftware/workflows/.github/workflows/tests-js.yml@master
