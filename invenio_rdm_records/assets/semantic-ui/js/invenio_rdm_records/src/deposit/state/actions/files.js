@@ -141,6 +141,17 @@ export const deleteFile = (file) => {
   return async (dispatch, _, config) => {
     try {
       const fileLinks = file.meta?.links || file.links;
+      if (!fileLinks) {
+        // The file has no backend counterpart (e.g. it was never uploaded), thus
+        // it only needs to be removed from the state.
+        dispatch({
+          type: FILE_DELETED_SUCCESS,
+          payload: {
+            filename: file.name,
+          },
+        });
+        return;
+      }
       await config.service.files.delete(fileLinks);
 
       dispatch({
